@@ -9,4 +9,9 @@ export class UserController {
   findOne(@Body() body: any) {
     return this.usersService.findOne(body.username);
   }
+
+  @Post('register')
+  async register(@Body() body: any) {
+    return await this.usersService.register(body);
+  }
 }
