@@ -47,14 +47,14 @@ export class UserService {
    * @param requestBody
    */
   async register(requestBody: any): Promise<any> {
-    const { accountName, realName, password, repassword, mobile } = requestBody;
+    const { username, realName, password, repassword, mobile } = requestBody;
     if (password !== repassword) {
       return {
         code: 400,
         msg: '两次密码输入不一致',
       };
     }
-    const user = await this.findOne(accountName);
+    const user = await this.findOne(username);
 
     if (user) {
       return {
@@ -68,7 +68,7 @@ export class UserService {
         INSERT INTO admin_user
             (account_name, real_name, passwd, passwd_salt, mobile, user_status, role, create_by)
         VALUES
-            ('${accountName}', '${realName}', '${hashPwd}', '${salt}', '${mobile}', 1, 3, 0)
+            ('${username}', '${realName}', '${hashPwd}', '${salt}', '${mobile}', 1, 3, 0)
     `;
     try {
       await sequelize.query(registerSQL, { logging: true });
